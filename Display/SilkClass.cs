@@ -19,7 +19,7 @@ public class SilkClass : IDisposable {
     protected IInputContext? input;
     protected ImGuiController? controller;
     protected (int x, int y) windowSize;
-    protected Floor f;
+    protected Game g;
 
     protected string VertexShader = """
     #version 330 core
@@ -44,9 +44,7 @@ public class SilkClass : IDisposable {
     public SilkClass(WindowOptions options) {
         window = Window.Create(options);
         windowSize = (options.Size.X, options.Size.Y);
-        f = new Floor([
-            450, 460, 470, 460, 455
-        ], windowSize.x);
+        g = new();
 
         // Wire up event handlers
         window.Load += OnLoad;
@@ -102,7 +100,7 @@ public class SilkClass : IDisposable {
     }
 
     protected virtual void OnMouseDown(IMouse mouse, MouseButton button) {
-        f.CalculateExplosion(new Point2D(mouse.Position.X, windowSize.y - mouse.Position.Y), 50);
+        g.Floor.CalculateExplosion(new Point2D(mouse.Position.X, windowSize.y - mouse.Position.Y), 50);
         Console.WriteLine($"Click at: {mouse.Position.X}, {mouse.Position.Y} with {button}");
     }
 
@@ -140,7 +138,7 @@ public class SilkClass : IDisposable {
         _gl.UseProgram(_program);
 
         // Draw the floor
-        Point2D[] points = f.GetPoints();
+        Point2D[] points = g.Floor.GetPoints();
         foreground.AddText(new Vector2(10, 50), 0xFFFFFFFF, $"{string.Join(';', points)}");
         for (int i = 1; i < points.Length; i++) {
             drawList.AddTriangleFilled(

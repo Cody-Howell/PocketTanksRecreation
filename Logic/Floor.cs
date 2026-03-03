@@ -11,22 +11,30 @@ public class Floor {
     }
 
     private static int MinHeight => 50;
+    private static int HeightDifference => 30;
+
+    public Floor(int totalCount, int maxWidth, int maxHeight) {
+        int currentHeight = maxHeight / 2;
+        List<int> heights = [];
+        Random r = new Random();
+        for (int i = 0; i < totalCount; i++) {
+            int semiNormal = (r.Next(-HeightDifference, HeightDifference) + r.Next(-HeightDifference, HeightDifference)) / 2;
+            int result = currentHeight + semiNormal;
+            heights.Add(result);
+            currentHeight = result;
+        }
+
+        this.maxWidth = maxWidth;
+        points = [..initializePoints([.. heights])];
+    }
 
     /// <summary>
     /// Initializes the internal array with an array of points spaced evenly
     /// between 0 and the max size.
     /// </summary>
     public Floor(int[] pointHeights, int maxWidth) {
-        int length = pointHeights.Length;
-        int[] x_coords = [.. MathHelpers.GetSpacedOutValues(length, maxWidth)];
-        Debug.Assert(x_coords.Length == length);
-        List<Point2D> calcPoints = [];
-        for (int i = 0; i < length; i++) {
-            calcPoints.Add(new Point2D(x_coords[i], Math.Max(pointHeights[i], MinHeight)));
-        }
-
-        points = [.. calcPoints];
         this.maxWidth = maxWidth;
+        points = [.. initializePoints(pointHeights)];
     }
 
     /// <summary>
@@ -58,7 +66,7 @@ public class Floor {
             double yDistance = Math.Sqrt(Math.Pow(radius, 2) - Math.Pow(xDistance, 2));
             if (p.Y <= point.Y) {
                 if (p.GetDistance(point) > radius) continue;
-                
+
                 yDistance = Math.Min(yDistance, radius - Math.Abs(p.Y - point.Y));
                 points[i] = new Point2D(p.X, Math.Max(p.Y - yDistance, MinHeight));
             } else {
@@ -66,5 +74,17 @@ public class Floor {
                 points[i] = new Point2D(p.X, Math.Max(p.Y - removalHeight, MinHeight));
             }
         }
+    }
+
+    private Point2D[] initializePoints(int[] pointHeights) {
+        int length = pointHeights.Length;
+        int[] x_coords = [.. MathHelpers.GetSpacedOutValues(length, maxWidth)];
+        Debug.Assert(x_coords.Length == length);
+        List<Point2D> calcPoints = [];
+        for (int i = 0; i < length; i++) {
+            calcPoints.Add(new Point2D(x_coords[i], Math.Max(pointHeights[i], MinHeight)));
+        }
+
+        return [.. calcPoints];
     }
 }
