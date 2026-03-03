@@ -60,22 +60,18 @@ public class SilkClass : IDisposable {
         _gl.ShaderSource(vertexShader, VertexShader);
         _gl.CompileShader(vertexShader);
 
-        // 2. Compile Fragment Shader
         uint fragmentShader = _gl.CreateShader(ShaderType.FragmentShader);
         _gl.ShaderSource(fragmentShader, FragmentShader);
         _gl.CompileShader(fragmentShader);
 
-        // 3. Link into a Program
         _program = _gl.CreateProgram();
         _gl.AttachShader(_program, vertexShader);
         _gl.AttachShader(_program, fragmentShader);
         _gl.LinkProgram(_program);
 
-        // Clean up individual shaders
         _gl.DeleteShader(vertexShader);
         _gl.DeleteShader(fragmentShader);
 
-        // Set up Input
         input = window.CreateInput();
         controller = new ImGuiController(
             _gl,
