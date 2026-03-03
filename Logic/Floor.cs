@@ -10,7 +10,7 @@ public class Floor {
         return points;
     }
 
-    private static int MinHeight => 20;
+    private static int MinHeight => 50;
 
     /// <summary>
     /// Initializes the internal array with an array of points spaced evenly
@@ -60,10 +60,10 @@ public class Floor {
                 if (p.GetDistance(point) > radius) continue;
                 
                 yDistance = Math.Min(yDistance, radius - Math.Abs(p.Y - point.Y));
-                points[i] = new Point2D(p.X, p.Y - yDistance);
+                points[i] = new Point2D(p.X, Math.Max(p.Y - yDistance, MinHeight));
             } else {
                 double removalHeight = yDistance + Math.Min(p.Y - point.Y, yDistance);
-                points[i] = new Point2D(p.X, p.Y - removalHeight);
+                points[i] = new Point2D(p.X, Math.Max(p.Y - removalHeight, MinHeight));
             }
         }
     }
