@@ -12,6 +12,7 @@ public class Floor {
 
     private static int MinHeight => 50;
     private static int HeightDifference => 30;
+    private static int generationRange = 3;
 
     public Floor(int totalCount, int maxWidth, int maxHeight) {
         int currentHeight = maxHeight / 2;
@@ -19,7 +20,7 @@ public class Floor {
         List<int> heights = [];
         Random r = new Random();
         for (int i = 0; i < totalCount; i++) {
-            int semiNormal = (r.Next(-5, 5) + r.Next(-5, 5)) / 2;
+            int semiNormal = (r.Next(-generationRange, generationRange) + r.Next(-generationRange, generationRange)) / 2;
             currentDirection = Math.Min(Math.Max(currentDirection + semiNormal, -HeightDifference), HeightDifference);
             int result = currentHeight + currentDirection;
             heights.Add(result);

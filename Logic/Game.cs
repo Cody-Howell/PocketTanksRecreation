@@ -6,7 +6,7 @@ public class Game {
     private (int min, int max) range = (10, 990);
     private Player p;
     public Player Player => p;
-    private double playerSlopeDifference = 1.5;
+    private double playerSlopeDifference = 1.25;
 
     public Game() {
         floor = new Floor(50, 1000, 1000);
