@@ -49,6 +49,7 @@ public class SilkClass : IDisposable {
         // Wire up event handlers
         window.Load += OnLoad;
         window.Render += OnRender;
+        window.Update += OnUpdate;
     }
 
     protected virtual unsafe void OnLoad() {
@@ -155,9 +156,27 @@ public class SilkClass : IDisposable {
             );
         }
 
-        drawList.AddCircleFilled(new Vector2(mousePos.X, mousePos.Y), 50.0f, 0xFF00FFFF);
+        // Draw player
+        float height = (float)g.Floor.GetHeightAt(g.Player.X_Coord);
+        foreground.AddCircleFilled(new Vector2(g.Player.X_Coord, windowSize.y - (height + 10)), 10.0f, 0xFF0000FF);
+
+        foreground.AddCircleFilled(new Vector2(mousePos.X, mousePos.Y), 50.0f, 0xFF00FFFF);
 
         controller.Render();
+    }
+
+    protected virtual void OnUpdate(double deltaTime) {
+        if (input is null) return;
+
+        var primaryKeyboard = input.Keyboards[0];
+
+        if (primaryKeyboard.IsKeyPressed(Key.Right)) {
+            g.MoveCharacter(true);
+        }
+
+        if (primaryKeyboard.IsKeyPressed(Key.Left)) {
+            g.MoveCharacter(false);
+        }
     }
 
     public void Run() {
