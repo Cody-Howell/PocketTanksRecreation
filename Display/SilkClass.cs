@@ -102,22 +102,24 @@ public class SilkClass : IDisposable {
 
     protected virtual void OnMouseDown(IMouse mouse, MouseButton button) {
         g.Floor.CalculateExplosion(new Point2D(mouse.Position.X, windowSize.y - mouse.Position.Y), 50);
-        Console.WriteLine($"Click at: {mouse.Position.X}, {mouse.Position.Y} with {button}");
+        // Console.WriteLine($"Click at: {mouse.Position.X}, {mouse.Position.Y} with {button}");
     }
 
     protected virtual void OnKeyDown(IKeyboard keyboard, Key key, int keyCode) {
         if (key == Key.Escape)
             window.Close();
 
-        Console.WriteLine($"Key Pressed: {key} (Native ID: {keyCode})");
+        // Console.WriteLine($"Key Pressed: {key} (Native ID: {keyCode})");
     }
 
     protected virtual void OnKeyUp(IKeyboard keyboard, Key key, int keyCode) {
-        Console.WriteLine($"Key Released: {key}");
+        // Console.WriteLine($"Key Released: {key}");
     }
 
     protected virtual void OnRender(double deltaTime) {
         if (_gl is null || input is null || controller is null) return;
+
+        g.Tick();
 
         var mousePos = input.Mice[0].Position;
 
@@ -171,6 +173,13 @@ public class SilkClass : IDisposable {
             10.0f
         );
 
+        // Draw bullets
+        foreach (Bullet b in g.bullets) {
+            foreground.AddCircleFilled(new Vector2((float)b.Point.X, windowSize.y - (float)b.Point.Y), 3.0f, 0xFF00FFFF);
+        }
+
+        // foreground.AddText(new Vector2(10, 50), 0xFFFFFFFF, $"Points: {string.Join(',', g.bullets.Select(a => a.Point))}");
+
         foreground.AddCircleFilled(new Vector2(mousePos.X, mousePos.Y), 50.0f, 0xFF00FFFF);
         // foreground.AddText(new Vector2(10, 50), 0xFFFFFFFF, $"Slope at: {g.Floor.GetSlopeAt(g.Player.X_Coord)}");
 
@@ -196,6 +205,10 @@ public class SilkClass : IDisposable {
 
         if (primaryKeyboard.IsKeyPressed(Key.K)) {
             g.AdjustPlayerAngle(-1);
+        }
+
+        if (primaryKeyboard.IsKeyPressed(Key.Space)) {
+            g.Fire();
         }
     }
 
