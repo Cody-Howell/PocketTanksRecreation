@@ -77,4 +77,14 @@ public class FloorTests {
         await Assert.That(f.GetPoints()[4].Y).IsEqualTo(60);
         await Assert.That(f.GetPoints()[5].Y).IsEqualTo(50);
     }
+
+    [Test]
+    public async Task FloorCanBeDestructed7() {
+        Floor f = new Floor([70, 65, 80, 70, 60, 50], 10);
+        f.CalculateExplosion(new Point2D(8, 70), 10);
+        await Assert.That(f.GetPoints()[0].Y).IsEqualTo(64);
+        await Assert.That(f.GetPoints()[1].Y).IsEqualTo(62);
+        await Assert.That(f.GetPoints()[2].Y).IsEqualTo(80 - 2 * Math.Sqrt(84));
+        await Assert.That(f.GetPoints()[3].Y).IsEqualTo(70 - Math.Sqrt(96));
+    }
 }

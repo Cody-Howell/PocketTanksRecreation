@@ -72,8 +72,7 @@ public class Floor {
             if (p.Y <= point.Y) {
                 if (p.GetDistance(point) > radius) continue;
 
-                yDistance = Math.Min(yDistance, radius - Math.Abs(p.Y - point.Y));
-                points[i] = new Point2D(p.X, Math.Max(p.Y - yDistance, MinHeight));
+                points[i] = new Point2D(p.X, Math.Max(point.Y - yDistance, MinHeight));
             } else {
                 double removalHeight = yDistance + Math.Min(p.Y - point.Y, yDistance);
                 points[i] = new Point2D(p.X, Math.Max(p.Y - removalHeight, MinHeight));

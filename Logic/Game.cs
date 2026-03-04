@@ -5,6 +5,6 @@ public class Game {
     public Floor Floor => floor;
 
     public Game() {
-        floor = new Floor(30, 1000, 1000);
+        floor = new Floor(50, 1000, 1000);
     }
 }
