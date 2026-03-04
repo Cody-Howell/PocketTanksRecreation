@@ -49,6 +49,17 @@ public class Floor {
         throw new Exception("Coordinate was not within expected bounds.");
     }
 
+    public double GetSlopeAt(double xCoordinate) {
+        for (int i = 1; i < points.Length; i++) {
+            if (xCoordinate <= points[i].X) {
+                Equation2D e = new Equation2D(points[i - 1], points[i]);
+                return e.Slope;
+            }
+        }
+
+        throw new Exception("Coordinate was not within expected bounds.");
+    }
+
     /// <summary>
     /// Returns true if the provided point is beneath the floor. Defaults to False if x-coordinate 
     /// is outside of the range.

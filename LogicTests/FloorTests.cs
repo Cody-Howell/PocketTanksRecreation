@@ -87,4 +87,22 @@ public class FloorTests {
         await Assert.That(f.GetPoints()[2].Y).IsEqualTo(80 - 2 * Math.Sqrt(84));
         await Assert.That(f.GetPoints()[3].Y).IsEqualTo(70 - Math.Sqrt(96));
     }
+
+    [Test]
+    [Arguments(0, -0.5)]
+    [Arguments(1, -0.5)]
+    [Arguments(9, -0.5)]
+    [Arguments(11, 1.5)]
+    [Arguments(19, 1.5)]
+    [Arguments(21, -1)]
+    [Arguments(29, -1)]
+    [Arguments(31, -1)]
+    [Arguments(39, -1)]
+    [Arguments(41, -2)]
+    [Arguments(49, -2)]
+    [Arguments(50, -2)]
+    public async Task GetSlopeAt(double x, double expSlope) {
+        Floor f = new Floor([80, 75, 90, 80, 70, 50], 50);
+        await Assert.That(f.GetSlopeAt(x)).IsEqualTo(expSlope);
+    }
 }
