@@ -158,9 +158,21 @@ public class SilkClass : IDisposable {
 
         // Draw player
         float height = (float)g.Floor.GetHeightAt(g.Player.X_Coord);
-        foreground.AddCircleFilled(new Vector2(g.Player.X_Coord, windowSize.y - (height + 10)), 10.0f, 0xFF0000FF);
+        Vector2 playerPoint = new Vector2(g.Player.X_Coord, windowSize.y - (height + 10));
+        foreground.AddCircleFilled(playerPoint, 10.0f, 0xFF0000FF);
+        // Draw turret
+        Rotation2D rot = g.Player.Rotation;
+        Point2D point = rot * 30;
+        Vector2 endpoint = new Vector2(playerPoint.X + (float)point.X, playerPoint.Y - (float)point.Y);
+        foreground.AddLine(
+            playerPoint,
+            endpoint,
+            0xFF0000FF, 
+            10.0f
+        );
 
         foreground.AddCircleFilled(new Vector2(mousePos.X, mousePos.Y), 50.0f, 0xFF00FFFF);
+        // foreground.AddText(new Vector2(10, 50), 0xFFFFFFFF, $"Slope at: {g.Floor.GetSlopeAt(g.Player.X_Coord)}");
 
         controller.Render();
     }
@@ -176,6 +188,14 @@ public class SilkClass : IDisposable {
 
         if (primaryKeyboard.IsKeyPressed(Key.Left)) {
             g.MoveCharacter(false);
+        }
+
+        if (primaryKeyboard.IsKeyPressed(Key.J)) {
+            g.AdjustPlayerAngle(1);
+        }
+
+        if (primaryKeyboard.IsKeyPressed(Key.K)) {
+            g.AdjustPlayerAngle(-1);
         }
     }
 

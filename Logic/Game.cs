@@ -6,7 +6,7 @@ public class Game {
     private (int min, int max) range = (10, 990);
     private Player p;
     public Player Player => p;
-    private double playerSlopeDifference = 1.25;
+    private double playerSlopeDifference = 1;
 
     public Game() {
         floor = new Floor(50, 1000, 1000);
@@ -22,5 +22,9 @@ public class Game {
             if (slope < -playerSlopeDifference) return;
             p.X_Coord = Math.Max(range.min, p.X_Coord - 1);
         }
+    }
+
+    public void AdjustPlayerAngle(double angle) {
+        p.AdjustRotation(angle);
     }
 }
