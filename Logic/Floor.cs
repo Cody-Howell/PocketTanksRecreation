@@ -15,11 +15,13 @@ public class Floor {
 
     public Floor(int totalCount, int maxWidth, int maxHeight) {
         int currentHeight = maxHeight / 2;
+        int currentDirection = 0;
         List<int> heights = [];
         Random r = new Random();
         for (int i = 0; i < totalCount; i++) {
-            int semiNormal = (r.Next(-HeightDifference, HeightDifference) + r.Next(-HeightDifference, HeightDifference)) / 2;
-            int result = currentHeight + semiNormal;
+            int semiNormal = (r.Next(-5, 5) + r.Next(-5, 5)) / 2;
+            currentDirection = Math.Min(Math.Max(currentDirection + semiNormal, -HeightDifference), HeightDifference);
+            int result = currentHeight + currentDirection;
             heights.Add(result);
             currentHeight = result;
         }
