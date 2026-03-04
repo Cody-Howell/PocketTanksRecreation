@@ -25,7 +25,7 @@ public class Floor {
         }
 
         this.maxWidth = maxWidth;
-        points = [..initializePoints([.. heights])];
+        points = [.. InitializePoints([.. heights])];
     }
 
     /// <summary>
@@ -34,7 +34,19 @@ public class Floor {
     /// </summary>
     public Floor(int[] pointHeights, int maxWidth) {
         this.maxWidth = maxWidth;
-        points = [.. initializePoints(pointHeights)];
+        points = [.. InitializePoints(pointHeights)];
+    }
+
+    public double GetHeightAt(double xCoordinate) {
+        for (int i = 1; i < points.Length; i++) {
+            if (xCoordinate <= points[i].X) {
+                Equation2D e = new Equation2D(points[i - 1], points[i]);
+                double result = e.Slope * xCoordinate + e.Intercept;
+                return result;
+            }
+        }
+
+        throw new Exception("Coordinate was not within expected bounds.");
     }
 
     /// <summary>
@@ -42,15 +54,8 @@ public class Floor {
     /// is outside of the range.
     /// </summary>
     public bool IsUnder(Point2D point) {
-        for (int i = 1; i < points.Length; i++) {
-            if (point.X <= points[i].X) {
-                Equation2D e = new Equation2D(points[i - 1], points[i]);
-                double result = e.Slope * point.X + e.Intercept;
-                if (point.Y > result) return false;
-                return true;
-            }
-        }
-
+        double coordinate = GetHeightAt(point.X);
+        if (point.Y <= coordinate) return true;
         return false;
     }
 
@@ -76,7 +81,7 @@ public class Floor {
         }
     }
 
-    private Point2D[] initializePoints(int[] pointHeights) {
+    private Point2D[] InitializePoints(int[] pointHeights) {
         int length = pointHeights.Length;
         int[] x_coords = [.. MathHelpers.GetSpacedOutValues(length, maxWidth)];
         Debug.Assert(x_coords.Length == length);
