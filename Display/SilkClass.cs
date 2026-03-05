@@ -145,7 +145,7 @@ public class SilkClass : IDisposable {
         // foreground.AddText(new Vector2(10, 50), 0xFFFFFFFF, $"{string.Join(';', points)}");
         for (int i = 1; i < points.Length; i++) {
             drawList.AddTriangleFilled(
-                new Vector2((float)points[i - 1].X, windowSize.y - (float)points[i - 1].Y),
+                new Vector2((float)points[i - 1].X, windowSize.y - (float)points[i - 1].Y + 2),
                 new Vector2((float)points[i - 1].X, windowSize.y),
                 new Vector2((float)points[i].X, windowSize.y),
                 0xFFFFFFFF

@@ -10,7 +10,7 @@ public class Game {
     public Player Player => p;
     private double playerSlopeDifference = 1;
     public List<Bullet> bullets = [];
-    private Vector2D Gravity = new(270, 3);
+    private Vector2D Gravity = new(270, 1);
 
     public Game() {
         floor = new Floor(50, 1000, 1000);
