@@ -136,7 +136,7 @@ public class SilkClass : IDisposable {
         var drawList = ImGui.GetBackgroundDrawList();
         var foreground = ImGui.GetForegroundDrawList();
 
-        foreground.AddText(new Vector2(10, 10), 0xFFFFFFFF, $"Mouse: {Math.Round(x, 2)}, {Math.Round(y, 2)}");
+        // foreground.AddText(new Vector2(10, 10), 0xFFFFFFFF, $"Mouse: {Math.Round(x, 2)}, {Math.Round(y, 2)}");
 
         _gl.UseProgram(_program);
 
@@ -177,6 +177,9 @@ public class SilkClass : IDisposable {
         foreach (Bullet b in g.bullets) {
             foreground.AddCircleFilled(new Vector2((float)b.Point.X, windowSize.y - (float)b.Point.Y), 3.0f, 0xFF00FFFF);
         }
+
+        // Helper text
+        foreground.AddText(new Vector2(10, 970), 0xFF000000, "Press Left/Right arrow to move, J/K to tilt, Space to shoot.");
 
         // foreground.AddText(new Vector2(10, 50), 0xFFFFFFFF, $"Points: {string.Join(',', g.bullets.Select(a => a.Point))}");
 
