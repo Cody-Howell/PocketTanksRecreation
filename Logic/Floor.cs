@@ -44,8 +44,7 @@ public class Floor {
         for (int i = 1; i < points.Length; i++) {
             if (xCoordinate <= points[i].X) {
                 Equation2D e = new Equation2D(points[i - 1], points[i]);
-                double result = e.Slope * xCoordinate + e.Intercept;
-                return result;
+                return e.ValueAt(xCoordinate);
             }
         }
 

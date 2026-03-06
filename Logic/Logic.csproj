@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HowlDev.Simulation.Physics.Primitive2D" Version="0.8.4" />
+    <PackageReference Include="HowlDev.Simulation.Physics.Primitive2D" Version="0.9.0" />
   </ItemGroup>
 
 </Project>
