@@ -123,18 +123,18 @@ public class SilkClass : IDisposable {
 
         var mousePos = input.Mice[0].Position;
 
-        var io = ImGui.GetIO();
+        // var io = ImGui.GetIO();
 
-        float x = mousePos.X / window.Size.X * 2 - 1;
-        float y = mousePos.Y / window.Size.Y * -2 + 1;
+        // float x = mousePos.X / window.Size.X * 2 - 1;
+        // float y = mousePos.Y / window.Size.Y * -2 + 1;
 
         controller.Update((float)deltaTime);
 
         _gl.ClearColor(Color.FromArgb(255, (int)(.45f * 255), (int)(.55f * 255), (int)(.60f * 255)));
         _gl.Clear((uint)ClearBufferMask.ColorBufferBit);
 
-        var drawList = ImGui.GetBackgroundDrawList();
-        var foreground = ImGui.GetForegroundDrawList();
+        ImDrawListPtr drawList = ImGui.GetBackgroundDrawList();
+        ImDrawListPtr foreground = ImGui.GetForegroundDrawList();
 
         // foreground.AddText(new Vector2(10, 10), 0xFFFFFFFF, $"Mouse: {Math.Round(x, 2)}, {Math.Round(y, 2)}");
 
